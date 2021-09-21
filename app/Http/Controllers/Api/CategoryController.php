@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -16,8 +17,11 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categorias = Category::all();
-        return $categorias;
+        $categorias = Category::include()
+            ->filtro()
+            ->ordenar()
+            ->getPaginate();
+        return CategoryResource::collection($categorias);
     }
 
     /**
@@ -48,7 +52,8 @@ class CategoryController extends Controller
     {
         //
         $categoria = Category::include()->findOrFail($id);
-        return $categoria;
+        $categoryResource = new CategoryResource($categoria);
+        return $categoryResource;
     }
     /**
      * Update the specified resource in storage.
@@ -61,7 +66,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'slug' => 'required|max:255|unique:categories,slug,'. $category->id
+            'slug' => 'required|max:255|unique:categories,slug,' . $category->id
         ]);
 
         $category->update($request->all());
