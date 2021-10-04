@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PostController;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\Api\RegisterController;
@@ -23,5 +26,12 @@ Route::post('categories', [CategoryController::class, 'store'])->name('api.v1.ca
 Route::get('categories/{category}', [CategoryController::class, 'show'])->name('api.v1.categories.show');
 Route::put('categories/{category}', [CategoryController::class, 'update'])->name('api.v1.categories.update');
 Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('api.v1.categories.delete');
+
+//Rutas para posts
+Route::get('posts', [PostController::class, 'index'])->name('api.v1.posts.index');
+Route::post('posts', [PostController::class, 'store'])->name('api.v1.posts.store');
+Route::get('posts/{post}', [PostController::class, 'show'])->name('api.v1.posts.show');
+Route::put('posts/{post}', [PostController::class, 'update'])->name('api.v1.posts.update');
+Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('api.v1.posts.delete');
 
 //Rutas para etiquetas

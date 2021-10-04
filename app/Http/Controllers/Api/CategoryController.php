@@ -71,7 +71,7 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return $category;
+        return  new CategoryResource($category);
     }
 
     /**
@@ -84,6 +84,6 @@ class CategoryController extends Controller
     {
         //
         $category->delete();
-        return $category;
+        return  new CategoryResource($category);
     }
 }
